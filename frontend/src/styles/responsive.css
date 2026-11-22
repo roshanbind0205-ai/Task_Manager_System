@@ -1,0 +1,77 @@
+@media screen and (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+
+  .container {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --navbar-height: 60px;
+  }
+
+  .container {
+    padding: 0 14px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .btn {
+    padding: 10px 16px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  body {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 0 12px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  h1 {
+    font-size: 21px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+}

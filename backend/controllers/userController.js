@@ -1,10 +1,5 @@
-
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
-
-// @desc Get logged-in user profile
-// @route GET /api/users/profile
-// @access Private
 
 export const getUserProfile = async (req, res) => {
     try {
@@ -32,11 +27,6 @@ export const getUserProfile = async (req, res) => {
         });
     }
 };
-
-
-// @desc Update logged-in user profile
-// @route PUT /api/users/profile
-// @access Private
 
 export const updateUserProfile = async (req, res) => {
     try {
@@ -104,11 +94,6 @@ export const updateUserProfile = async (req, res) => {
         });
     }
 };
-
-
-// @desc Change logged-in user password
-// @route PUT /api/users/change-password
-// @access Private
 
 export const changePassword = async (req, res) => {
     try {

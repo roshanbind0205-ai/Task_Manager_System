@@ -1,9 +1,4 @@
-
 import Task from '../models/Task.js';
-
-// @desc Create a new task
-// @route POST /api/tasks
-// @access Private
 
 export const createTask = async (req, res) => {
     try {
@@ -41,11 +36,6 @@ export const createTask = async (req, res) => {
     }
 };
 
-
-// @desc Get all tasks of logged-in user
-// @route GET /api/tasks
-// @access Private
-
 export const getAllTasks = async (req, res) => {
     try {
         const tasks = await Task.find({
@@ -67,11 +57,6 @@ export const getAllTasks = async (req, res) => {
         });
     }
 };
-
-
-// @desc Get single task
-// @route GET /api/tasks/:id
-// @access Private
 
 export const getTaskById = async (req, res) => {
     try {
@@ -108,11 +93,6 @@ export const getTaskById = async (req, res) => {
         });
     }
 };
-
-
-// @desc Update task
-// @route PUT /api/tasks/:id
-// @access Private
 
 export const updateTask = async (req, res) => {
     try {
@@ -194,11 +174,6 @@ export const updateTask = async (req, res) => {
         });
     }
 };
-
-
-// @desc Delete task
-// @route DELETE /api/tasks/:id
-// @access Private
 
 export const deleteTask = async (req, res) => {
     try {

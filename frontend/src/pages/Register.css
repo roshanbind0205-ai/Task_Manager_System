@@ -1,0 +1,155 @@
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 15px;
+  background: var(--background-color);
+}
+
+.register-card {
+  width: 100%;
+  max-width: 450px;
+  padding: 35px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  box-shadow: var(--shadow-md);
+}
+
+.register-heading {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--primary-color);
+}
+
+.register-heading h1 {
+  margin: 12px 0 8px;
+  color: var(--text-primary);
+  font-size: 27px;
+}
+
+.register-heading p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.register-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.register-form-group label {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.register-form-group input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--surface-color);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.register-form-group input:focus {
+  border-color: var(--primary-color);
+}
+
+.register-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.register-password-wrapper input {
+  width: 100%;
+  padding-right: 45px;
+}
+
+.register-password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent !important;
+  border: none !important;
+  width: auto !important;
+  padding: 5px !important;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-password-toggle:hover {
+  color: var(--primary-color);
+  opacity: 1 !important;
+}
+
+.register-card form > button {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.register-card form > button:hover {
+  opacity: 0.9;
+}
+
+.register-card form > button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.register-error {
+  padding: 12px;
+  margin-bottom: 20px;
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+.register-footer {
+  margin-top: 22px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.register-footer a {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 25px 18px;
+  }
+
+  .register-heading h1 {
+    font-size: 23px;
+  }
+}
