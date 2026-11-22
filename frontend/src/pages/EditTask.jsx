@@ -1,11 +1,14 @@
-
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import TaskForm from '../components/TaskForm';
 import Loader from '../components/Loader';
+
 import { getTaskById, updateTask } from '../services/taskService';
+
 import './EditTask.css';
 
 const EditTask = () => {
@@ -15,13 +18,11 @@ const EditTask = () => {
   const [task, setTask] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchTask = async () => {
       try {
         setLoading(true);
-        setError('');
 
         const response = await getTaskById(id);
 
@@ -35,12 +36,20 @@ const EditTask = () => {
         }
 
         setTask(taskData);
+
       } catch (err) {
-        setError(
+        toast.error(
           err.response?.data?.message ||
           err.message ||
-          'Unable to load task'
+          'Unable to load task',
+          {
+            position: 'top-right',
+            autoClose: 4000,
+          }
         );
+
+        setTask(null);
+
       } finally {
         setLoading(false);
       }
@@ -50,18 +59,30 @@ const EditTask = () => {
   }, [id]);
 
   const handleUpdateTask = async (formData) => {
+    if (saving) return;
+
     try {
       setSaving(true);
-      setError('');
 
       await updateTask(id, formData);
 
+      toast.success('Task updated successfully!', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+
       navigate('/tasks');
+
     } catch (err) {
-      setError(
+      toast.error(
         err.response?.data?.message ||
-        'Task update failed'
+        'Task update failed. Please try again.',
+        {
+          position: 'top-right',
+          autoClose: 4000,
+        }
       );
+
     } finally {
       setSaving(false);
     }
@@ -73,22 +94,19 @@ const EditTask = () => {
 
   return (
     <div className="edit-task-layout">
+
       <Sidebar />
 
       <main className="edit-task-main">
+
         <Navbar />
 
         <div className="edit-task-content">
+
           <div className="edit-task-header">
             <h1>Edit Task</h1>
             <p>Update your task details below.</p>
           </div>
-
-          {error && (
-            <div className="edit-task-error">
-              {error}
-            </div>
-          )}
 
           {!task && (
             <button
@@ -102,16 +120,21 @@ const EditTask = () => {
 
           {task && (
             <div className="edit-task-form-card">
+
               <TaskForm
                 initialData={task}
                 onSubmit={handleUpdateTask}
                 buttonText="Update Task"
                 loading={saving}
               />
+
             </div>
           )}
+
         </div>
+
       </main>
+
     </div>
   );
 };

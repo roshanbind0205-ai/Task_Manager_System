@@ -1,27 +1,44 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import TaskForm from '../components/TaskForm';
 import { createTask } from '../services/taskService';
+
 import './AddTask.css';
 
 const AddTask = () => {
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+
   const handleAddTask = async (formData) => {
+    if (loading) return;
+
     try {
       setLoading(true);
-      setError('');
+
       await createTask(formData);
+
+      toast.success('Task added successfully!', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+
       navigate('/tasks');
+
     } catch (err) {
-      setError(
+      toast.error(
         err.response?.data?.message ||
-        'Task add nahi ho paya. Please try again.'
+        'Task added Unsuccessfully!. Please try again.',
+        {
+          position: 'top-right',
+          autoClose: 4000,
+        }
       );
+
     } finally {
       setLoading(false);
     }
@@ -31,10 +48,15 @@ const AddTask = () => {
     <div className="add-task-layout">
 
       <Sidebar />
+
       <main className="add-task-main">
+
         <Navbar />
+
         <div className="add-task-scroll-area">
+
           <div className="add-task-content">
+
             <div className="add-task-header">
               <div>
                 <h1>Add New Task</h1>
@@ -43,21 +65,23 @@ const AddTask = () => {
                 </p>
               </div>
             </div>
-            {error && (
-              <div className="add-task-error">
-                {error}
-              </div>
-            )}
+
             <div className="add-task-form-card">
+
               <TaskForm
                 onSubmit={handleAddTask}
                 buttonText="Create Task"
                 loading={loading}
               />
+
             </div>
+
           </div>
+
         </div>
+
       </main>
+
     </div>
   );
 };

@@ -1,9 +1,11 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogIn, Eye, EyeOff } from 'lucide-react';
+import { toast } from 'react-toastify';
+
 import useAuth from '../hooks/useAuth';
 import Loader from '../components/Loader';
+
 import './Login.css';
 
 const Login = () => {
@@ -16,7 +18,6 @@ const Login = () => {
     });
 
     const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
@@ -28,20 +29,42 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');
+
+        if (loading) return;
+
         setLoading(true);
 
         try {
-            const response = await login(formData);
+            const response = await login({
+                email: formData.email.trim().toLowerCase(),
+                password: formData.password,
+            });
 
-            if (response.success) {
+            if (response?.success) {
+                toast.success('Login successful! Welcome back.', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                });
+
                 navigate('/dashboard');
             } else {
-                setError(response.message || 'Login failed');
+                toast.error(
+                    response?.message || 'Login failed. Please try again.',
+                    {
+                        position: 'top-right',
+                        autoClose: 4000,
+                    }
+                );
             }
+
         } catch (err) {
-            setError(
-                err.response?.data?.message || 'Invalid email or password'
+            toast.error(
+                err.response?.data?.message ||
+                'Invalid email or password',
+                {
+                    position: 'top-right',
+                    autoClose: 4000,
+                }
             );
         } finally {
             setLoading(false);
@@ -58,22 +81,22 @@ const Login = () => {
 
                 <div className="login-heading">
                     <LogIn size={35} />
+
                     <h1>Welcome Back</h1>
+
                     <p>Login to manage your tasks</p>
                 </div>
-
-                {error && (
-                    <div className="login-error">
-                        {error}
-                    </div>
-                )}
 
                 <form onSubmit={handleSubmit}>
 
                     <div className="login-form-group">
-                        <label>Email Address</label>
+                        <label htmlFor="email">
+                            Email Address
+                        </label>
+
                         <input
                             type="email"
+                            id="email"
                             name="email"
                             placeholder="Enter your email"
                             value={formData.email}
@@ -83,11 +106,15 @@ const Login = () => {
                     </div>
 
                     <div className="login-form-group">
-                        <label>Password</label>
+                        <label htmlFor="password">
+                            Password
+                        </label>
 
                         <div className="login-password-wrapper">
+
                             <input
                                 type={showPassword ? 'text' : 'password'}
+                                id="password"
                                 name="password"
                                 placeholder="Enter your password"
                                 value={formData.password}
@@ -111,11 +138,15 @@ const Login = () => {
                                     <Eye size={20} />
                                 )}
                             </button>
+
                         </div>
                     </div>
 
-                    <button type="submit" disabled={loading}>
-                        Login
+                    <button
+                        type="submit"
+                        disabled={loading}
+                    >
+                        {loading ? 'Logging in...' : 'Login'}
                     </button>
 
                 </form>

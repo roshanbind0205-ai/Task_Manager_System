@@ -1,6 +1,6 @@
-
 import React, { useEffect, useState } from 'react';
 import { User, Lock, Save } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
@@ -27,9 +27,6 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
   const [changingPassword, setChangingPassword] = useState(false);
 
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -40,16 +37,22 @@ const Profile = () => {
           name: userData.name || '',
           email: userData.email || '',
         });
+
       } catch (err) {
-        setError(
+        toast.error(
           err.response?.data?.message ||
-          'Unable to load profile'
+          'Unable to load profile',
+          {
+            position: 'top-right',
+            autoClose: 3000,
+          }
         );
 
         setProfile({
           name: user?.name || '',
           email: user?.email || '',
         });
+
       } finally {
         setLoading(false);
       }
@@ -75,10 +78,10 @@ const Profile = () => {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
+    if (saving) return;
+
     try {
       setSaving(true);
-      setError('');
-      setMessage('');
 
       const response = await api.put(
         '/users/profile',
@@ -90,12 +93,21 @@ const Profile = () => {
         email: response.data.user.email,
       });
 
-      setMessage('Profile updated successfully!');
+      toast.success('Profile updated successfully!', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+
     } catch (err) {
-      setError(
+      toast.error(
         err.response?.data?.message ||
-        'Profile update failed'
+        'Profile update failed',
+        {
+          position: 'top-right',
+          autoClose: 4000,
+        }
       );
+
     } finally {
       setSaving(false);
     }
@@ -104,30 +116,40 @@ const Profile = () => {
   const handleChangePassword = async (e) => {
     e.preventDefault();
 
+    if (changingPassword) return;
+
     try {
       setChangingPassword(true);
-      setError('');
-      setMessage('');
 
       const response = await api.put(
         '/users/change-password',
         passwordData
       );
 
-      setMessage(
+      toast.success(
         response.data.message ||
-        'Password changed successfully!'
+        'Password changed successfully!',
+        {
+          position: 'top-right',
+          autoClose: 3000,
+        }
       );
 
       setPasswordData({
         currentPassword: '',
         newPassword: '',
       });
+
     } catch (err) {
-      setError(
+      toast.error(
         err.response?.data?.message ||
-        'Password change failed'
+        'Password change failed',
+        {
+          position: 'top-right',
+          autoClose: 4000,
+        }
       );
+
     } finally {
       setChangingPassword(false);
     }
@@ -139,7 +161,9 @@ const Profile = () => {
 
   return (
     <div className="profile-layout">
+
       <Sidebar />
+
       <main className="profile-main">
 
         <Navbar />
@@ -152,18 +176,6 @@ const Profile = () => {
               Manage your personal information and password.
             </p>
           </div>
-
-          {message && (
-            <div className="profile-success">
-              {message}
-            </div>
-          )}
-
-          {error && (
-            <div className="profile-error">
-              {error}
-            </div>
-          )}
 
           <div className="profile-card">
 

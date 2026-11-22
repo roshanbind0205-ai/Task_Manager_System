@@ -1,7 +1,7 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Pencil, Trash2, Plus, ListTodo } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
@@ -15,13 +15,11 @@ const AllTasks = () => {
 
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [deletingId, setDeletingId] = useState(null);
 
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      setError('');
 
       const response = await getAllTasks();
 
@@ -32,9 +30,14 @@ const AllTasks = () => {
         [];
 
       setTasks(Array.isArray(taskList) ? taskList : []);
+
     } catch (err) {
-      setError(
-        err.response?.data?.message || 'Tasks load nahi ho paaye.'
+      toast.error(
+        err.response?.data?.message || 'Tasks load nahi ho paaye.',
+        {
+          position: 'top-right',
+          autoClose: 3000,
+        }
       );
     } finally {
       setLoading(false);
@@ -45,12 +48,8 @@ const AllTasks = () => {
     fetchTasks();
   }, []);
 
-  const handleDelete = async (id) => {
-    const confirmed = window.confirm(
-      'Kya aap is task ko delete karna chahte hain?'
-    );
-
-    if (!confirmed) return;
+  const confirmDelete = async (id) => {
+    if (deletingId) return;
 
     try {
       setDeletingId(id);
@@ -62,13 +61,76 @@ const AllTasks = () => {
           (task) => task._id !== id && task.id !== id
         )
       );
+
+      toast.success('Task deleted successfully!', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+
     } catch (err) {
-      setError(
-        err.response?.data?.message || 'Task delete nahi ho paaya.'
+      toast.error(
+        err.response?.data?.message ||
+        'Task delete nahi ho paaya.',
+        {
+          position: 'top-right',
+          autoClose: 4000,
+        }
       );
     } finally {
       setDeletingId(null);
     }
+  };
+
+  const handleDelete = (id) => {
+    if (deletingId) return;
+
+    toast.info(
+      ({ closeToast }) => (
+        <div className="delete-confirm-toast">
+
+          <div className="delete-confirm-content">
+            <strong>Delete Task?</strong>
+
+            <p>
+              Are you sure you want to delete this task ?
+            </p>
+          </div>
+
+          <div className="delete-confirm-actions">
+
+            <button
+              type="button"
+              className="delete-confirm-yes"
+              onClick={() => {
+                closeToast();
+                confirmDelete(id);
+              }}
+            >
+              Yes, Delete
+            </button>
+
+            <button
+              type="button"
+              className="delete-confirm-no"
+              onClick={closeToast}
+            >
+              Cancel
+            </button>
+
+          </div>
+
+        </div>
+      ),
+      {
+        position: 'top-right',
+        autoClose: false,
+        closeOnClick: false,
+        closeButton: true,
+        draggable: false,
+        pauseOnHover: true,
+        theme: 'colored',
+      }
+    );
   };
 
   const getStatusClass = (status) => {
@@ -83,14 +145,22 @@ const AllTasks = () => {
 
   return (
     <div className="all-tasks-page">
+
       <Navbar />
+
       <div className="all-tasks-layout">
+
         <Sidebar />
+
         <main className="all-tasks-main">
+
           <div className="all-tasks-content">
+
             <div className="all-tasks-header">
+
               <div>
                 <h1>All Tasks</h1>
+
                 <p>
                   Manage and track all your tasks in one place.
                 </p>
@@ -103,40 +173,53 @@ const AllTasks = () => {
                 <Plus size={18} />
                 Add New Task
               </button>
+
             </div>
+
+    
             <div className="all-tasks-summary">
+
               <div className="all-tasks-summary-icon">
                 <ListTodo size={24} />
               </div>
+
               <div>
                 <span>Total Tasks</span>
                 <h2>{tasks.length}</h2>
               </div>
+
             </div>
-            {error && (
-              <div className="all-tasks-error">
-                {error}
-              </div>
-            )}
 
             {loading ? (
+
               <Loader />
+
             ) : tasks.length === 0 ? (
+
               <div className="all-tasks-empty">
+
                 <ListTodo size={42} />
+
                 <h3>No tasks found</h3>
+
                 <p>
                   Abhi aapne koi task add nahi kiya hai.
                 </p>
+
                 <button
                   onClick={() => navigate('/add-task')}
                 >
                   Create Your First Task
                 </button>
+
               </div>
+
             ) : (
+
               <div className="all-tasks-table-wrapper">
+
                 <table className="all-tasks-table">
+
                   <thead>
                     <tr>
                       <th>Task</th>
@@ -148,7 +231,9 @@ const AllTasks = () => {
                   </thead>
 
                   <tbody>
+
                     {tasks.map((task) => {
+
                       const taskId = task._id || task.id;
 
                       return (
@@ -156,11 +241,13 @@ const AllTasks = () => {
 
                           <td>
                             <div className="all-task-title">
+
                               <strong>{task.title}</strong>
 
                               <span>
                                 {task.description || 'No description'}
                               </span>
+
                             </div>
                           </td>
 
@@ -187,6 +274,7 @@ const AllTasks = () => {
                           </td>
 
                           <td>
+
                             <div className="all-task-actions">
 
                               <button
@@ -199,26 +287,31 @@ const AllTasks = () => {
                                 <Pencil size={17} />
                               </button>
 
+                               
                               <button
                                 className="all-task-delete-btn"
                                 title="Delete task"
-                                disabled={deletingId === taskId}
+                                disabled={deletingId === taskId || deletingId !== null}
                                 onClick={() => handleDelete(taskId)}
                               >
                                 <Trash2 size={17} />
                               </button>
 
                             </div>
+
                           </td>
 
                         </tr>
                       );
+
                     })}
+
                   </tbody>
 
                 </table>
 
               </div>
+
             )}
 
           </div>

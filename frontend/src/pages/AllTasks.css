@@ -6,12 +6,14 @@
   overflow: hidden;
   background: var(--bg-color, #f5f7fb);
 }
+
 .all-tasks-layout {
   display: flex;
   flex: 1;
   min-height: 0;
   overflow: hidden;
 }
+
 .all-tasks-main {
   flex: 1;
   min-width: 0;
@@ -27,6 +29,7 @@
   max-width: 1400px;
   margin: 0 auto;
 }
+
 .all-tasks-header {
   display: flex;
   justify-content: space-between;
@@ -45,6 +48,7 @@
   margin: 0;
   color: var(--text-muted, #6b7280);
 }
+
 .all-tasks-add-btn,
 .all-tasks-empty button {
   display: inline-flex;
@@ -64,6 +68,7 @@
 .all-tasks-empty button:hover {
   opacity: 0.9;
 }
+
 .all-tasks-summary {
   display: flex;
   align-items: center;
@@ -99,6 +104,7 @@
   color: var(--text-color, #1f2937);
   font-size: 24px;
 }
+
 .all-tasks-error {
   margin-bottom: 18px;
   padding: 12px 15px;
@@ -106,6 +112,7 @@
   background: #fee2e2;
   color: #b91c1c;
 }
+
 .all-tasks-empty {
   display: flex;
   flex-direction: column;
@@ -119,6 +126,7 @@
   color: var(--text-muted, #6b7280);
   text-align: center;
 }
+
 .all-tasks-empty h3 {
   margin: 15px 0 5px;
   color: var(--text-color, #1f2937);
@@ -127,6 +135,7 @@
 .all-tasks-empty p {
   margin: 0 0 18px;
 }
+
 .all-tasks-table-wrapper {
   width: 100%;
   overflow-x: auto;
@@ -164,6 +173,7 @@
 .all-tasks-table tbody tr:last-child td {
   border-bottom: none;
 }
+
 .all-task-title {
   display: flex;
   flex-direction: column;
@@ -183,6 +193,7 @@
   font-size: 12px;
   text-overflow: ellipsis;
 }
+
 .task-priority,
 .task-status {
   display: inline-block;
@@ -254,6 +265,61 @@
   opacity: 0.5;
 }
 
+/* Delete Confirmation Toast */
+
+.delete-confirm-toast {
+  width: 100%;
+  color: #fff;
+}
+
+.delete-confirm-content strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.delete-confirm-content p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.delete-confirm-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.delete-confirm-actions button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.delete-confirm-yes {
+  background: #fff;
+  color: #dc2626;
+}
+
+.delete-confirm-yes:hover {
+  background: #fee2e2;
+}
+
+.delete-confirm-no {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.delete-confirm-no:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
 @media (max-width: 768px) {
   .all-tasks-main {
     padding: 22px 16px;
@@ -285,5 +351,105 @@
 
   .all-tasks-summary {
     width: 100%;
+  }
+}
+
+/* Add Task Layout CSS - Existing CSS */
+
+.add-task-layout {
+  width: 100%;
+  height: 100vh;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  background: var(--background-color);
+}
+
+.add-task-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.add-task-scroll-area {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.add-task-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.add-task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.add-task-header h1 {
+  margin: 0 0 8px;
+  color: var(--text-primary);
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.add-task-header p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.add-task-form-card {
+  width: 100%;
+  max-width: 750px;
+  padding: 28px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.add-task-error {
+  max-width: 750px;
+  margin-bottom: 20px;
+  padding: 13px 16px;
+  color: #b42318;
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .add-task-content {
+    padding: 24px 18px;
+  }
+
+  .add-task-header h1 {
+    font-size: 24px;
+  }
+
+  .add-task-form-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-task-content {
+    padding: 20px 14px;
+  }
+
+  .add-task-form-card {
+    padding: 16px;
   }
 }

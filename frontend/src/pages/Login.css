@@ -1,3 +1,4 @@
+
 .login-page {
     min-height: 100vh;
     display: flex;
@@ -38,15 +39,6 @@
     margin: 0;
 }
 
-.login-error {
-    padding: 12px;
-    background: #fee2e2;
-    color: #dc2626;
-    border-radius: 7px;
-    margin-bottom: 20px;
-    font-size: 14px;
-}
-
 .login-form-group {
     margin-bottom: 24px;
 }
@@ -77,22 +69,24 @@
 
 .login-password-wrapper {
     position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .login-password-wrapper input {
-    padding-right: 45px;
+    width: 100%;
+    padding-right: 48px;
 }
 
 .login-password-toggle {
     position: absolute;
     right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
     border: none;
+    background: transparent;
     color: #64748b;
     cursor: pointer;
     padding: 5px;
