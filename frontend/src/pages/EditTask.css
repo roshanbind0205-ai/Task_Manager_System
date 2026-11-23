@@ -1,25 +1,56 @@
 
+ 
 .edit-task-layout {
   display: flex;
-  min-height: 100vh;
-  background: var(--background-color);
-}
-
-.edit-task-main {
-  flex: 1;
+  width: 100%;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--background-color, #f5f7fb);
+  box-sizing: border-box;
 }
-
+ 
+.edit-task-main {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  width: 0;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+ 
 .edit-task-content {
+  flex: 1 1 auto;
   width: 100%;
   max-width: 1100px;
+  min-width: 0;
+  min-height: 0;
   margin: 0 auto;
   padding: 32px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
+.edit-task-content::-webkit-scrollbar {
+  width: 7px;
+}
+
+.edit-task-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+ 
 .edit-task-header {
+  width: 100%;
   margin-bottom: 28px;
 }
 
@@ -27,14 +58,17 @@
   color: var(--text-primary);
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin: 0 0 8px;
 }
 
 .edit-task-header p {
   color: var(--text-secondary);
   font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
 }
 
+ 
 .edit-task-form-card {
   width: 100%;
   max-width: 750px;
@@ -43,9 +77,12 @@
   border: 1px solid var(--border-color);
   border-radius: 14px;
   box-shadow: var(--shadow-sm);
+  box-sizing: border-box;
 }
 
+ 
 .edit-task-error {
+  width: 100%;
   max-width: 750px;
   padding: 13px 16px;
   margin-bottom: 20px;
@@ -54,11 +91,87 @@
   border: 1px solid #fecdca;
   border-radius: 8px;
   font-size: 14px;
+  box-sizing: border-box;
+}
+ 
+.edit-task-content > .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-@media (max-width: 768px) {
+ 
+@media screen and (max-width: 1024px) {
+
   .edit-task-content {
-    padding: 24px 18px;
+    padding: 26px 22px;
+  }
+
+  .edit-task-form-card {
+    max-width: 100%;
+  }
+
+}
+
+ 
+@media screen and (max-width: 768px) {
+
+  .edit-task-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+ 
+  .edit-task-main {
+    display: contents;
+  }
+ 
+  .edit-task-main > :first-child {
+    order: 1;
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  
+  .edit-task-layout > .sidebar {
+    display: block;
+    position: relative;
+    order: 2;
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-sizing: border-box;
+  }
+
+  
+  .edit-task-content {
+    display: block;
+    position: relative;
+    order: 3;
+    flex: 1 1 0%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 22px 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
   }
 
   .edit-task-header h1 {
@@ -66,16 +179,77 @@
   }
 
   .edit-task-form-card {
-    padding: 20px;
+    width: 100%;
+    max-width: 100%;
+    padding: 22px;
   }
+
+}
+ 
+@media screen and (max-width: 576px) {
+
+  .edit-task-content {
+    padding: 18px 12px;
+  }
+
+  .edit-task-header {
+    margin-bottom: 22px;
+  }
+
+  .edit-task-header h1 {
+    font-size: 23px;
+  }
+
+  .edit-task-header p {
+    font-size: 13px;
+  }
+
+  .edit-task-form-card {
+    padding: 18px;
+  }
+
 }
 
-@media (max-width: 480px) {
+ 
+@media screen and (max-width: 480px) {
+
   .edit-task-content {
-    padding: 20px 14px;
+    padding: 16px 12px;
+  }
+
+  .edit-task-header h1 {
+    font-size: 22px;
+  }
+
+  .edit-task-header p {
+    font-size: 12px;
   }
 
   .edit-task-form-card {
     padding: 16px;
+    border-radius: 10px;
   }
+
+}
+
+ 
+@media screen and (max-width: 360px) {
+
+  .edit-task-content {
+    padding: 14px 10px;
+  }
+
+  .edit-task-header h1 {
+    font-size: 20px;
+  }
+
+  .edit-task-form-card {
+    padding: 13px;
+  }
+
+  .edit-task-error {
+    padding: 11px;
+    font-size: 12px;
+  }
+
 }

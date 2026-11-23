@@ -52,25 +52,27 @@ const Dashboard = () => {
     task => task.status === 'In Progress'
   ).length;
 
-  return (
-    <div className="dashboard-layout">
+  
+return (
+  <div className="dashboard-layout">
+
+    <div className="dashboard-main">
+
+      <Navbar />
+
       <Sidebar />
 
-      <div className="dashboard-main">
+      <main className="dashboard-content">
 
-        <Navbar />
+        <div className="dashboard-inner">
 
-        <main className="dashboard-content">
           <div className="dashboard-header">
             <div>
               <h1>Dashboard</h1>
               <p>Welcome back! Here's your task overview.</p>
             </div>
 
-            <Link
-              to="/add-task"
-              className="dashboard-add-button"
-            >
+            <Link to="/add-task" className="dashboard-add-button">
               <PlusCircle size={18} />
               Add New Task
             </Link>
@@ -80,11 +82,8 @@ const Dashboard = () => {
             <Loader message="Loading dashboard..." />
           ) : (
             <>
-
               {error && (
-                <div className="dashboard-error">
-                  {error}
-                </div>
+                <div className="dashboard-error">{error}</div>
               )}
 
               <div className="dashboard-stats">
@@ -130,6 +129,7 @@ const Dashboard = () => {
                 </div>
 
               </div>
+
               <section className="dashboard-tasks-section">
 
                 <div className="dashboard-section-heading">
@@ -138,27 +138,20 @@ const Dashboard = () => {
                 </div>
 
                 {tasks.length === 0 ? (
-
                   <div className="dashboard-empty">
                     <ListTodo size={42} />
                     <h3>No tasks yet</h3>
                     <p>Create your first task to get started.</p>
-                    <Link to="/add-task">
-                      Create Task
-                    </Link>
+                    <Link to="/add-task">Create Task</Link>
                   </div>
-
                 ) : (
-
                   <div className="dashboard-recent-list">
 
                     {tasks.slice(0, 5).map(task => (
-
                       <div
                         className="dashboard-task-row"
                         key={task._id || task.id}
                       >
-
                         <div className="dashboard-task-info">
                           <h3>{task.title}</h3>
                           <p>
@@ -171,26 +164,23 @@ const Dashboard = () => {
                         >
                           {task.status}
                         </span>
-
                       </div>
-
                     ))}
 
                   </div>
-
                 )}
 
               </section>
-
             </>
           )}
 
-        </main>
-
-      </div>
+        </div>
+      </main>
 
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Dashboard;

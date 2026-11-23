@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -32,7 +33,7 @@ const AddTask = () => {
     } catch (err) {
       toast.error(
         err.response?.data?.message ||
-        'Task added Unsuccessfully!. Please try again.',
+        'Task added Unsuccessfully! Please try again.',
         {
           position: 'top-right',
           autoClose: 4000,
@@ -47,12 +48,18 @@ const AddTask = () => {
   return (
     <div className="add-task-layout">
 
+      {/* Sidebar */}
       <Sidebar />
 
+      {/* Main Content */}
       <main className="add-task-main">
 
-        <Navbar />
+        {/* Navbar */}
+        <div className="add-task-navbar">
+          <Navbar />
+        </div>
 
+        {/* Scrollable Content */}
         <div className="add-task-scroll-area">
 
           <div className="add-task-content">
